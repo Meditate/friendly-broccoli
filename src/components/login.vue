@@ -1,28 +1,31 @@
 <template>
   <div>
-    <h1>Здарвствуйте, представьтесь пожалуйста:</h1>
-
-    <h3 v-if="showFirstHelpNotification == true">Подумай хорошо</h3>
+    <h1>Здравствуйте, представьтесь пожалуйста:</h1>
 
     <div v-if="showSecondHelpNotification == true">
       <p>Возможные варианты:</p>
 
-      <ul>
-        <li v-for="variant in nameVariants" v-bind:key="variant">
-          {{variant}}
-        </li>
-      </ul>
+      <md-list>
+        <md-list-item @click="chooseName(variant)" v-for="variant in nameVariants" v-bind:key="variant">{{variant}}</md-list-item>
+      </md-list>
     </div>
 
-    <button v-on:click="tryName">Да, это моё имя</button>
+    <md-card>
+      <md-card-content>
+        <md-field :class="messageClass" md-inline>
+          <md-button class="md-raised" :md-ripple="false" v-on:click="tryName">Да, это моё имя</md-button>
+          <md-input v-model="name" required></md-input>
+          <span class="md-error" v-if="showFirstHelpNotification == true">Подумай хорошо</span>
+          <div v-if="nameAccepted == true">
+            <h3 >{{greeting}}</h3>
 
-    <input v-model="name" placeholder="Имя">
+            <md-button class="md-raised" :md-ripple="false" v-on:click="submit">Что вы хотите от меня?</md-button>
+          </div>
+        </md-field>
+      </md-card-content>
 
-    <div v-if="nameAccepted == true">
-      <h3 >{{greeting}}</h3>
+    </md-card>
 
-      <button v-on:click="submit">Что вы хотите от меня?</button>
-    </div>
   </div>
 </template>
 
@@ -32,7 +35,7 @@
   import { stringDecryptor} from '../helpers/stringDecryptor.js'
 
   export default {
-    name: 'Hello',
+    name: 'Login',
     data() {
       return {
         counter: 0,
@@ -47,6 +50,10 @@
     methods: {
       mappedVariantsFromJson: function() {
         return hello_json.variants.map((variant) => { return stringDecryptor(variant.name) })
+      },
+      chooseName: function(chosenName) {
+        this.nameAccepted = true
+        this.name = chosenName
       },
       tryName: function() {
         if (this.nameVariants.includes(this.name)) {
