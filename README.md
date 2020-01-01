@@ -1,5 +1,3 @@
-# love_sasha
-
 ## Project setup
 ```
 yarn install
