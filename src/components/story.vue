@@ -16,7 +16,7 @@
 
       <p v-if="fourthParagraph.content" v-html="fourthParagraph.content"></p>
 
-      <StoryPrizes class="question" v-if="storyPrizes == true" @selected="onPrizeSelect"/>
+      <StoryPrizes class="question" v-if="storyPrizes == true"/>
     </div>
   </div>
 </template>

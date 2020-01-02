@@ -4,7 +4,7 @@ import App from './App.vue'
 import routes from './routes'
 import VueCryptojs from 'vue-cryptojs'
 
-import { MdButton, MdField, MdList, MdCard } from 'vue-material/dist/components'
+import { MdButton, MdField, MdList, MdCard, MdProgress } from 'vue-material/dist/components'
 
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
@@ -19,6 +19,7 @@ Vue.use(MdButton)
 Vue.use(MdCard)
 Vue.use(MdList)
 Vue.use(MdField)
+Vue.use(MdProgress)
 
 const router = new VueRouter({
     routes // short for `routes: routes`

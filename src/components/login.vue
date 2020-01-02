@@ -12,7 +12,7 @@
 
     <md-card>
       <md-card-content>
-        <md-field :class="messageClass" md-inline>
+        <md-field md-inline>
           <md-button class="md-raised" :md-ripple="false" v-on:click="tryName">Да, это моё имя</md-button>
           <md-input v-model="name" required></md-input>
           <span class="md-error" v-if="showFirstHelpNotification == true">Подумай хорошо</span>
