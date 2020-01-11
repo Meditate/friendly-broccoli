@@ -1,27 +1,27 @@
 <template>
   <div>
-    <h1>Здравствуйте, представьтесь пожалуйста:</h1>
-
-    <div v-if="showSecondHelpNotification == true">
-      <p>Возможные варианты:</p>
-
-      <md-list>
-        <md-list-item @click="chooseName(variant)" v-for="variant in nameVariants" v-bind:key="variant">{{variant}}</md-list-item>
-      </md-list>
-    </div>
-
     <md-card>
+      <md-card-header>
+        <div class="md-title">
+              Здравствуйте, представьтесь пожалуйста:
+        </div>
+      </md-card-header>
       <md-card-content>
-        <md-field md-inline>
-          <md-button class="md-raised" :md-ripple="false" v-on:click="tryName">Да, это моё имя</md-button>
-          <md-input v-model="name" required></md-input>
-          <span class="md-error" v-if="showFirstHelpNotification == true">Подумай хорошо</span>
-          <div v-if="nameAccepted == true">
-            <h3 >{{greeting}}</h3>
+        <div v-if="showSecondHelpNotification == true">
+          <p>Возможные варианты:</p>
 
-            <md-button class="md-raised" :md-ripple="false" v-on:click="submit">Что вы хотите от меня?</md-button>
-          </div>
+          <md-list>
+            <md-list-item @click="chooseName(variant)" v-for="variant in nameVariants" v-bind:key="variant">{{variant}}</md-list-item>
+          </md-list>
+        </div>
+
+        <md-field :class="messageClass">
+          <md-input class="name-input" v-model="name" required></md-input>
+          <span class="md-error">Подумай хорошо</span>
         </md-field>
+
+        <md-button v-if="nameAccepted == false" class="md-raised" :md-ripple="false" v-on:click="tryName">Да, это моё имя</md-button>
+        <md-button v-if="nameAccepted == true" class="md-raised" :md-ripple="false" v-on:click="submit">Что вы хотите от меня?</md-button>
       </md-card-content>
 
     </md-card>
@@ -31,7 +31,6 @@
 
 <script>
   import hello_json from '../store/hello.json'
-  import { stringInterpolator } from '../helpers/stringInterpolator.js'
   import { stringDecryptor} from '../helpers/stringDecryptor.js'
 
   export default {
@@ -44,7 +43,14 @@
         name:  "",
         nameVariants: this.mappedVariantsFromJson(),
         nameAccepted: false,
-        greeting: ""
+      }
+    },
+    computed: {
+      messageClass () {
+        return {
+          'md-invalid': this.showFirstHelpNotification || this.showSecondHelpNotification
+
+        }
       }
     },
     methods: {
@@ -58,23 +64,19 @@
       tryName: function() {
         if (this.nameVariants.includes(this.name)) {
           this.nameAccepted = true
-          this.createGreeting();
         }
         else {
           this.nameAccepted = false
           this.counter += 1;
 
-          if (this.counter > 3) {
+          if (this.counter > 0) {
             this.showFirstHelpNotification = true
           }
 
-          if (this.counter > 6) {
+          if (this.counter > 4) {
             this.showSecondHelpNotification = true
           }
         }
-      },
-      createGreeting: function() {
-        this.greeting = stringInterpolator(stringDecryptor(hello_json.message.greeting), { name: this.name })
       },
       submit: function() {
         this.$emit('submitted', this.name)
@@ -84,6 +86,12 @@
 </script>
 
 <style>
+  .name-input {
+    text-align: center;
+  }
+  .name-error {
+    color: red;
+  }
   h3 {
     margin-bottom: 5%;
   }

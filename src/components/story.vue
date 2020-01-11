@@ -2,21 +2,37 @@
   <div>
     <h2> Часть Первая </h2>
     <div class="content">
-      <p v-html="firstParagraph.content"></p>
+      <transition name="fade">
+        <p v-html="firstParagraph.content"></p>
+      </transition>
 
-      <StoryFirstQuestion class="question" v-if="firstQuestion == true" @correctAnswer="onCorrectFirstAnswer"/>
+      <transition name="fade">
+        <StoryFirstQuestion class="question" v-if="firstQuestion == true" @correctAnswer="onCorrectFirstAnswer"/>
+      </transition>
 
-      <p v-if="secondParagraph.content" v-html="secondParagraph.content"></p>
+      <transition name="fade">
+        <p v-if="secondParagraph.content" v-html="secondParagraph.content"></p>
+      </transition>
 
-      <StorySecondQuestion class="question" v-if="secondQuestion == true" @correctAnswer="onCorrectSecondAnswer"/>
+      <transition name="fade">
+        <StorySecondQuestion class="question" v-if="secondQuestion == true" @correctAnswer="onCorrectSecondAnswer"/>
+      </transition>
 
-      <p v-if="thirdParagraph.content" v-html="thirdParagraph.content"></p>
+      <transition name="fade">
+        <p v-if="thirdParagraph.content" v-html="thirdParagraph.content"></p>
+      </transition>
 
-      <StoryThirdQuestion class="question" v-if="thirdQuestion == true" @correctAnswer="onCorrectThirdAnswer"/>
+      <transition name="fade">
+        <StoryThirdQuestion class="question" v-if="thirdQuestion == true" @correctAnswer="onCorrectThirdAnswer"/>
+      </transition>
 
-      <p v-if="fourthParagraph.content" v-html="fourthParagraph.content"></p>
+      <transition name="fade">
+        <p v-if="fourthParagraph.content" v-html="fourthParagraph.content"></p>
+      </transition>
 
-      <StoryPrizes class="question" v-if="storyPrizes == true"/>
+      <transition name="fade">
+        <StoryPrizes class="question" v-if="storyPrizes == true"/>
+      </transition>
     </div>
   </div>
 </template>
@@ -100,5 +116,14 @@
   }
   .highlight {
     border-bottom: 2px solid red;
+  }
+  .fade-enter-active {
+      transition: opacity 1s;
+  }
+  .fade-leave-active {
+      transition: opacity 0.1s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+      opacity: 0;
   }
 </style>

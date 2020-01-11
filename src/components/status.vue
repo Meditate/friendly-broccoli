@@ -1,6 +1,5 @@
 <template>
   <div class="status">
-    <md-button id="back-button" class="md-raised" :md-ripple="false" v-on:click="openLink">Вернуться</md-button>
     <md-card>
       <md-card-content>
         <p>
@@ -15,6 +14,7 @@
           </p>
 
           <md-button class="md-raised" :md-ripple="false" v-on:click="updateStatus">Получить актуальный статус</md-button>
+          <md-button id="back-button" class="md-raised" :md-ripple="false" v-on:click="backLink">Вернуться</md-button>
         </div>
       </md-card-content>
     </md-card>
@@ -47,7 +47,7 @@
 
         this.loading = false
       },
-      openLink: function() {
+      backLink: function() {
         this.$router.go(-1)
       }
     }
